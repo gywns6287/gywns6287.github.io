@@ -17,7 +17,7 @@ platforms:
   -
     type: KaKao
     icon: "fab fa-telegram"
-    link: "https://sharer.kakao.com/talk/friends/picker/easylink?app_key=TITLE&url=URL"
+    link: "https://sharer.kakao.com/talk/friends/picker/easylink?title=TITLE&url=URL"
 
   # Uncomment below if you need to.
   # -
