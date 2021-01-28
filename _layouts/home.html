@@ -1,96 +1,36 @@
 ---
 layout: page
 # The Home page layout
+# v2.0
+# https://github.com/cotes2020/jekyll-theme-chirpy
+# © 2017-2019 Cotes Chung
+# MIT Licensed
 ---
 
 
-{% assign pinned = site.posts | where_exp: "item", "item.pin == true"  %}
-{% assign default = site.posts | where_exp: "item", "item.pin != true"  %}
-{% assign posts = "" | split: "" %}
-
-<!-- Get pinned posts -->
-
-{% assign offset = paginator.page | minus: 1 | times: paginator.per_page %}
-{% assign pinned_num = pinned.size | minus: offset %}
-
-{% if pinned_num > 0 %}
-  {% for i in (offset..pinned.size) limit: pinned_num %}
-    {% assign posts = posts | push: pinned[i] %}
-  {% endfor %}
-{% else %}
-  {% assign pinned_num = 0 %}
-{% endif %}
-
-
-<!-- Get default posts -->
-
-{% assign default_beg = offset | minus: pinned.size %}
-
-{% if default_beg < 0 %}
-  {% assign default_beg = 0 %}
-{% endif %}
-
-{% assign default_num = paginator.posts | size | minus: pinned_num  %}
-{% assign default_end = default_beg | plus: default_num | minus: 1 %}
-
-{% if default_num > 0 %}
-  {% for i in (default_beg..default_end) %}
-    {% assign posts = posts | push: default[i] %}
-  {% endfor %}
-{% endif %}
-
-
-<div id="post-list">
-
-{% for post in posts %}
-
-  <div class="post-preview">
-    <h1>
-      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-    </h1>
-
-    <div class="post-content">
-      <p>
-        {% include no-linenos.html content=post.content %}
-        {{ content | markdownify | strip_html | truncate: 200 }}
-      </p>
-    </div>
-
-    <div class="post-meta text-muted d-flex justify-content-between">
-
-      <div>
-        <!-- posted date -->
-        <i class="far fa-calendar fa-fw"></i>
-        {% include timeago.html date=post.date tooltip=true %}
-
-        <!-- time to read -->
-        <i class="far fa-clock fa-fw"></i>
-        {% include read-time.html content=post.content %}
-
-        <!-- page views -->
-        {% if site.google_analytics.pv.enabled %}
-        <i class="far fa-eye fa-fw"></i>
-        <span id="pv_{{-post.title-}}" class="pageviews">
-          <i class="fas fa-spinner fa-spin fa-fw"></i>
-        </span>
-        {% endif %}
-      </div>
-
-      {% if post.pin %}
-      <div class="pin">
-        <i class="fas fa-thumbtack fa-fw"></i>
-        <span>{{ site.data.label.pin_prompt | default: 'Pinned' }}</span>
-      </div>
-      {% endif %}
-
-    </div> <!-- .post-meta -->
-
-  </div> <!-- .post-review -->
-
-{% endfor %}
-
-</div> <!-- #post-list -->
-
-{% if paginator.total_pages > 0 %}
-  {% include post-paginator.html %}
-{% endif %}
+<h1 id="about-me">About me</h1>
+<h3 id="hyo-jun-lee-">Hyo-Jun Lee (이효준)</h3>
+<p>Office: <a href="https://sites.google.com/view/cvlabcnu">Computer Vision Lab</a>, Chungnam National University, South Korea
+<br>Email: gywns6287@gmail.com</p>
+<ul>
+<li><a href="https://scholar.google.co.kr/citations?hl=en&amp;view_op=list_works&amp;gmla=AJsN-F6HTEDB3VbGenBJ2FqIetqYfF2GFbFr2gGCRrnJvssANp0w74B4lyIyR7Ki9WCYJv-zriLLb80l9t03Lj-AEhHR7_hOzA&amp;user=lotSLNMAAAAJ">Google Scholar</a></li>
+<li><a href="https://github.com/gywns6287">Github</a></li>
+</ul>
+<h4 id="education">Education</h4>
+<ul>
+<li>2012 - 2018 <strong>B.S</strong> Dept.  Animal science, Chungnam National University, South Korea</li>
+<li>2018 - 2020 <strong>M.S</strong> Dept. Animal genomics and biotechnology, Chungnam National University, South Korea (Advisor: Seung Hwan Lee)</li>
+<li>2020 -  ing <strong>Ph.D.</strong> Dept. Bio artificial intelligence, Chungnam National University, South Korea (Advisor: Yeong Jun Koh)</li>
+</ul>
+<h4 id="languages">languages</h4>
+<ul>
+<li>R, Python</li>
+</ul>
+<h4 id="awards">Awards</h4>
+<ul>
+<li>2020 Korea Health Datathon 2020 A Track 1st</li>
+</ul>
+<h4 id="research-interest">Research Interest</h4>
+<p>Deep learning, Machin learning, Biological image processing, Bioinformatics, Computer vision</p>
+<h4 id="publication">Publications</h4>
+<p>For publications see the <a href="tabs/publication">JOURNAL &amp; CONFERENCE PUBLICATION</a> tab at the side bar.</p>
