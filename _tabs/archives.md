@@ -2,6 +2,6 @@
 layout: archives
 title: Journal & Conference Publication
 icon: fas fa-archive
-order: 3
+order: 1
 ---
 
