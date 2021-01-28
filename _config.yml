@@ -1,10 +1,15 @@
-# The Site Configuration
+# The Site Settings
+# v2.0
+# https://github.com/cotes2020/jekyll-theme-chirpy
+# © 2017-2019 Cotes Chung
+# MIT licensed
+
 
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # --------------------------
-title: Hyo-Jun Lee                         # the main title
+title: Hyo-Jun Lee                     # the main title
 
-tagline: A text-focused Jekyll theme   # it will display as the sub-title
+tagline: Bio-AI, Computer-Vision, Bio-Informatics   # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
   A minimal, portfolio, sidebar,
@@ -14,17 +19,17 @@ description: >-                        # used by seo meta and the atom feed
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
 url: 'https://gywns6287.github.io'
 
-author: your_full_name                  # change to your full name
+author: Hyo Jun Lee                   # change to your full name
 
 github:
-  username: github_username             # change to your github username
+  username: gywns6287             # change to your github username
 
 twitter:
   username: twitter_username            # change to your twitter username
 
 social:
-  name: your_full_name                  # it will shows as the copyright owner in Footer
-  email: example@doamin.com             # change to your email address
+  name: Hyo-Jun Lee                     # it will shows as the copyright owner in Footer
+  email: gywns6287@gmail.com            # change to your email address
   links:
     # The first element serves as the copyright owner's link
     - https://twitter.com/username      # change to your twitter homepage
@@ -42,7 +47,7 @@ google_site_verification: google_meta_tag_verification # change to your verifica
 baseurl: ''
 
 # Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
-timezone: Asia/Shanghai
+timezone: Asia/Seoul
 
 google_analytics:
   id: ''          # Fill with your Google Analytics ID
@@ -72,7 +77,7 @@ disqus:
 #
 #     dark   - Use the dark color scheme
 #
-theme_mode:   # [light|dark]
+theme_mode: light  # [light|dark]
 
 # The CDN endpoint for images.
 # Notice that once it is assigned, the CDN url
@@ -82,7 +87,7 @@ theme_mode:   # [light|dark]
 img_cdn: ''
 
 # the avatar on sidebar, support local or CORS resources
-avatar: https://cdn.jsdelivr.net/gh/cotes2020/chirpy-images/commons/avatar.jpg
+avatar: /assets/img/favicons/ms-icon-310x310.png
 
 # boolean type, the global switch for ToC in posts.
 toc: true
@@ -170,6 +175,7 @@ defaults:
           url: /
 
 sass:
+  sass_dir: /assets/css
   style: compressed
 
 compress_html:
@@ -189,10 +195,6 @@ exclude:
   - docs
   - README.md
   - LICENSE
-  - gulpfile.js
-  - node_modules
-  - package.json
-  - package-lock.json
 
 jekyll-archives:
   enabled: [categories, tags]
