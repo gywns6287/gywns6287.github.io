@@ -1,10 +1,4 @@
----
-permalink: robots.txt
-# The robots rules
----
-
 User-agent: *
-
 Allow: /
 
 Sitemap: https://gywns6287.github.io/sitemap.xml
