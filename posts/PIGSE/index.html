@@ -1,0 +1,259 @@
+<!DOCTYPE html><html lang="en" mode="light" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="pv-cache-enabled" content="false"><meta name="generator" content="Jekyll v4.2.0" /><meta property="og:title" content="ResNet50 을 활용한 돼지 도체의 성별 예측" /><meta name="author" content="Hyo-Jun Lee" /><meta property="og:locale" content="en_US" /><meta name="description" content="사용된 코드는 아래의 url 에서 확인 하실 수 있습니다. The codes used in the poster can be found at https://github.com/gywns6287/pig_sex_classifier" /><meta property="og:description" content="사용된 코드는 아래의 url 에서 확인 하실 수 있습니다. The codes used in the poster can be found at https://github.com/gywns6287/pig_sex_classifier" /><link rel="canonical" href="https://gywns6287.github.io/posts/PIGSE/" /><meta property="og:url" content="https://gywns6287.github.io/posts/PIGSE/" /><meta property="og:site_name" content="Hyo-Jun Lee" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2021-03-02T17:00:00+09:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="ResNet50 을 활용한 돼지 도체의 성별 예측" /><meta name="twitter:site" content="@twitter_username" /><meta name="twitter:creator" content="@Hyo-Jun Lee" /><meta name="google-site-verification" content="google_meta_tag_verification" /> <script type="application/ld+json"> {"author":{"@type":"Person","name":"Hyo-Jun Lee"},"description":"사용된 코드는 아래의 url 에서 확인 하실 수 있습니다. The codes used in the poster can be found at https://github.com/gywns6287/pig_sex_classifier","url":"https://gywns6287.github.io/posts/PIGSE/","@type":"BlogPosting","headline":"ResNet50 을 활용한 돼지 도체의 성별 예측","dateModified":"2021-06-03T13:47:45+09:00","datePublished":"2021-03-02T17:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://gywns6287.github.io/posts/PIGSE/"},"@context":"https://schema.org"}</script><title>ResNet50 을 활용한 돼지 도체의 성별 예측 | Hyo-Jun Lee</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="cdn.jsdelivr.net"><link rel="dns-prefetch" href="cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script defer src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id=G-SLE093F45F"></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-SLE093F45F'); }); </script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src="/assets/img/favicons/ms-icon-310x310.png" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">Hyo-Jun Lee</a></div><div class="site-subtitle font-italic">Bio-AI, Computer-Vision, Bio-Informatics</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT ME</span> </a><li class="nav-item"> <a href="/tabs/publication/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>JOURNAL & CONFERENCE PUBLICATION</span> </a><li class="nav-item"> <a href="/tabs/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>PROJECT</span> </a><li class="nav-item"> <a href="/tabs/tags/" class="nav-link"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center"> <a href="https://github.com/gywns6287" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['gywns6287','gmail.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Posts </a> </span> <span>ResNet50 을 활용한 돼지 도체의 성별 예측</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>ResNet50 을 활용한 돼지 도체의 성별 예측</h1><div class="post-meta text-muted d-flex flex-column"><div> <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Tue, Mar 2, 2021, 5:00 PM +0900" > Mar 2 <i class="unloaded">2021-03-02T17:00:00+09:00</i> </span> by <span class="author"> Hyo-Jun Lee </span></div><div> <span> Updated <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="Thu, Jun 3, 2021, 1:47 PM +0900" > Jun 3 <i class="unloaded">2021-06-03T13:47:45+09:00</i> </span> </span> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="2533 words">14 min</span></div></div><div class="post-content"><p><small>사용된 코드는 아래의 url 에서 확인 하실 수 있습니다. The codes used in the poster can be found at <strong>https://github.com/gywns6287/pig_sex_classifier</strong> </small></p><p>이번 프로젝트에서는 컴퓨터 비전 영역의 성공한 딥러닝 모델인 ResNet50 를 활용하여 돼지 도체의 성별을 예측하는 모델을 구현해 보고자 합니다.</p><h2 id="resnet50">ResNet50</h2><h3 id="skip-connection">Skip connection</h3><p>ResNet 은 ImageNet 영상 인식 대회에 2015년에 승리를 한 네트워크로 현재 많은 CNN 모델의 트렌드를 만든 모델입니다. ResNet의 핵심 요소는 바로 스킵 연결 (skip connection) 입니다. 숏컷 연결 (shortcut connection) 이라고도 불리는 이 기법은 말 그대로 특정 층에 존재하는 출력물을 다음 합성곱 층을 통과한 출력물에 더해주는 연결을 뜻 합니다.</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://user-images.githubusercontent.com/71325306/109637429-215a3880-7b90-11eb-9014-3a8fdbbe299b.png" alt="image" /></p><p>일반적인 신경망을 훈련시킬 때는 목적 함수 \(h(x)\) 를 모델링 하는 것을 목표로 하게 됩니다. 하지만, 네트워크의 출력이 입력 부분과 더해지게 된다면 네트워크는 \(h(x)\) 를 학습 하는 대신 \(f(x)=h(x)-x\) 를 학습하게 될 것입니다. 다시 생각해보면 이 \(f(x)\)는 바로 모델 \(h(x)\) 의 잔차(residual) 라고도 볼 수 있습니다. 이것이 바로 이 네트워크가 Res(residual) Net 이라고 불리는 이유라고 할 수 있습니다.</p><h3 id="model-architecture">Model architecture</h3><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://user-images.githubusercontent.com/71325306/109642130-ef4bd500-7b95-11eb-8e75-28fd26f73a0a.png" alt="image" /></p><p>위의 그림은 ResNet의 구조에 대한 간략한 모식도 입니다. ResNet의 잔차블록은 채널의 개수를 줄여주는 첫번째 층 (합성곱 1x1) 이후 합성 곱 연산을 담당해주는 두번째 층 (합성곱 3x3) 마지막으로 채널의 개수를 다시 늘려주는 층 (합성곱 1x1) 총 세개의 층으로 병목 (bottle neck) 구조로 구현되어 있습니다. ResNet 은 이러한 잔차 블록을 얼마나 쌓는가에 따라 ResNet36, ResNet50, ResNet101 층 등 다양한 형태를 취할 수 있습니다.</p><h2 id="class-activation-map">Class activation map</h2><p>딥 러닝의 가장 큰 단점 중 하나는 바로 모델이 영상으로부터 의사 결정을 하게 된 원인을 파악하기 힘들다는 점입니다. Bolei et al 은 이러한 문제점을 해결하기 위해 Class activation map(CAM) 을 제시하였습니다.</p><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://user-images.githubusercontent.com/71325306/109638768-c295be80-7b91-11eb-8d3a-02b701e937d7.png" alt="image" /></p><p>위의 그림은 CAM의 원리를 보여주고 있습니다. 딥 러닝 모델의 마지막 출력 부문을 GAP(Global Average Pooling)으로 변환 시켜 주어 마지막 합성 곱 층에서 출력되는 feature channel 들의 weight를 학습과정에서 모델이 계산할 수 있게 해줍니다. 후에 계산된 weights와 마지막 합성 곱 층의 출력 feature channel 들을 곱한 후 모두 더해주면 모델이 의사결정을 하게 된 요인을 파악하기 위한 Class activation map을 얻을 수 있게 됩니다.</p><h2 id="pig-sex-estimation">Pig sex estimation</h2><p>돼지의 성별은 돼지고기의 가격을 결정하게 되는 주요한 요인입니다. 현재 돼지의 성별은 돼지의 도축 과정 중 숙련된 판정사에 의해 판정되고 있습니다. 하지만 사람이 일일이 모든 돼지고기를 판정 하는 것은 생산과정에서 많은 시간과 인력을 요구하게 됩니다. 이에 돼지고기 생성 공정에 인공지능을 활용한 자동 돼지 성별 판독기를 도입한다면, 더 효율적인 돼지고기 생산이 가능해질 것입니다.</p><h3 id="implementation">Implementation</h3><p>우선 ResNet50 모델을 구현해 봅시다. 이번 프로젝트에서는 keras applications 에서 제공해 주는 ResNet50 을 메서드를 활용해 간편히 불러왔습니다. 함수에서 <code class="language-plaintext highlighter-rouge">include_top = False</code> 를 선언해 주어 ResNet50 의 출력 부분을 제외한 부분을 호출합니다. 이후 만들어진 <code class="language-plaintext highlighter-rouge">base</code> 모델에 <code class="language-plaintext highlighter-rouge">inputs</code> 을 통과시켜주어 그래프를 연결해 줍니다. 모델의 마지막 층은 CAM을 생성하기 위해 클래스의 개수 만큼 Channel을 형성하게 디자인해 주며 <code class="language-plaintext highlighter-rouge">GlobalAveragePooling2D()</code> 역시도 추가해 줍니다.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.applications</span> <span class="kn">import</span> <span class="n">ResNet50</span>
+<span class="kn">from</span> <span class="nn">data_loader</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">ResNet50_CAM</span><span class="p">(</span><span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span><span class="mi">224</span><span class="p">,</span><span class="mi">3</span><span class="p">)):</span>
+    
+    <span class="n">base</span> <span class="o">=</span> <span class="n">ResNet50</span><span class="p">(</span><span class="n">include_top</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">input_shape</span> <span class="o">=</span> <span class="n">input_shape</span><span class="p">)</span>
+    
+    <span class="n">inputs</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span>
+    
+    <span class="n">x</span> <span class="o">=</span> <span class="n">base</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">Conv2D</span><span class="p">(</span><span class="n">class_num</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">'relu'</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+    
+    <span class="n">x</span> <span class="o">=</span> <span class="n">GlobalAveragePooling2D</span><span class="p">()(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span>  <span class="n">Dense</span><span class="p">(</span><span class="n">class_num</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">'softmax'</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span><span class="n">out</span><span class="p">)</span>
+</pre></table></code></div></div><hr /><p>모델의 학습에 사용할 하이퍼파라미터들을 세팅해 줍니다. 여기서 <code class="language-plaintext highlighter-rouge">crop_point</code> 를 지정하여 다음에 나올 코드에서 돼지 이미지에서 성별 분류에 필요없는 전방 0.4 영역을 잘라내 주게 됩니다.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="n">train_path</span> <span class="o">=</span> <span class="s">'data</span><span class="se">\\</span><span class="s">train'</span>
+<span class="n">test_path</span> <span class="o">=</span> <span class="s">'data</span><span class="se">\\</span><span class="s">test'</span>
+<span class="n">out</span> <span class="o">=</span> <span class="s">'results'</span>
+
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">16</span>
+<span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span><span class="mi">224</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">crop_point</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">1e-05</span>
+<span class="n">class_num</span> <span class="o">=</span> <span class="mi">3</span>
+</pre></table></code></div></div><hr /><p><code class="language-plaintext highlighter-rouge">crop_loader</code> 는 이미지를 잘라 낸 후 생성해주는 제네레이터로 <strong>https://github.com/gywns6287/pig_sex_classifier</strong> 의 코드에서 자세히 확인할 수 있습니다. 코드 실행 결과 이번 프로젝트에서 활용할 데이터는 train: 5545장, test: 1384장으로 이루어져 있는 것을 확인 할 수 있습니다.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="c1">#Load Data
+</span><span class="n">train</span> <span class="o">=</span> <span class="n">crop_loader</span><span class="p">(</span><span class="n">train_path</span><span class="p">,</span> <span class="n">crop_point</span><span class="p">,</span> <span class="n">target_size</span> <span class="o">=</span> <span class="n">input_shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span> <span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s">'train'</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">crop_loader</span><span class="p">(</span><span class="n">test_path</span><span class="p">,</span> <span class="n">crop_point</span><span class="p">,</span> <span class="n">target_size</span> <span class="o">=</span> <span class="n">input_shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span> <span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s">'test'</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre>Found 5545 images belonging to 3 classes.
+Found 1384 images belonging to 3 classes.
+</pre></table></code></div></div><hr /><p>모델을 학습 시켜 줍니다. 이번 프로젝트에서는 모델을 총 100회 학습하였습니다.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre><td class="rouge-code"><pre><span class="c1">#Load Model
+</span><span class="n">model</span> <span class="o">=</span> <span class="n">ResNet50_CAM</span><span class="p">(</span><span class="n">input_shape</span> <span class="o">=</span> <span class="n">input_shape</span><span class="p">)</span>
+<span class="n">model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">optimizers</span><span class="p">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">lr</span><span class="p">),</span> <span class="s">"categorical_crossentropy"</span><span class="p">,</span> <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s">'accuracy'</span><span class="p">])</span>
+<span class="n">ckp</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">callbacks</span><span class="p">.</span><span class="n">ModelCheckpoint</span><span class="p">(</span><span class="n">out</span><span class="o">+</span><span class="s">'</span><span class="se">\\</span><span class="s">'</span><span class="o">+</span><span class="s">"weights.h5"</span><span class="p">,</span> 
+                                <span class="n">monitor</span><span class="o">=</span><span class="s">'loss'</span><span class="p">,</span>
+                                <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+                                <span class="n">save_best_only</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1">#Train Model
+</span><span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">.</span><span class="n">gen</span><span class="p">,</span>
+        <span class="n">steps_per_epoch</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">train</span><span class="p">.</span><span class="n">geninfo</span><span class="p">),</span>
+        <span class="n">epochs</span> <span class="o">=</span> <span class="n">epochs</span><span class="p">,</span> 
+        <span class="n">callbacks</span><span class="o">=</span> <span class="p">[</span><span class="n">ckp</span><span class="p">],</span>
+        <span class="n">validation_data</span> <span class="o">=</span> <span class="n">test</span><span class="p">.</span><span class="n">gen</span><span class="p">,</span>
+        <span class="n">validation_steps</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">test</span><span class="p">.</span><span class="n">geninfo</span><span class="p">))</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre>Epoch 1/100
+347/347 [==============================] - ETA: 0s - loss: 0.8445 - accuracy: 0.4885
+Epoch 00001: loss improved from inf to 0.84451, saving model to results\weights.h5
+347/347 [==============================] - 158s 454ms/step - loss: 0.8445 - accuracy: 0.4885 - val_loss: 1.0767 - val_accuracy: 0.4227
+Epoch 2/100
+347/347 [==============================] - ETA: 0s - loss: 0.6643 - accuracy: 0.6646
+Epoch 00002: loss improved from 0.84451 to 0.66428, saving model to results\weights.h5
+347/347 [==============================] - 158s 455ms/step - loss: 0.6643 - accuracy: 0.6646 - val_loss: 1.0897 - val_accuracy: 0.4386
+
+...
+
+Epoch 100/100
+347/347 [==============================] - ETA: 0s - loss: 0.3090 - accuracy: 0.9980
+Epoch 00100: loss improved from 0.31035 to 0.30902, saving model to results\weights.h5
+347/347 [==============================] - 154s 445ms/step - loss: 0.3090 - accuracy: 0.9980 - val_loss: 0.3237 - val_accuracy: 0.9957
+
+&lt;tensorflow.python.keras.callbacks.History at 0x245e2d787f0&gt;
+</pre></table></code></div></div><hr /><p>모델의 성능을 평가해 보겠습니다. 다시 한번 <code class="language-plaintext highlighter-rouge">test</code> 제네레이터를 생성한 후 각 원-핫 코딩의 인덱스가 어떤 클래스를 지칭하는지를 <code class="language-plaintext highlighter-rouge">class_dic</code> 에 저장합니다.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="c1">#evaludation performance
+</span><span class="n">test</span> <span class="o">=</span> <span class="n">crop_loader</span><span class="p">(</span><span class="n">test_path</span><span class="p">,</span> <span class="n">crop_point</span><span class="p">,</span> <span class="n">target_size</span> <span class="o">=</span> <span class="n">input_shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span> <span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s">'test'</span><span class="p">)</span>
+<span class="n">class_dic</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">test</span><span class="p">.</span><span class="n">geninfo</span><span class="p">.</span><span class="n">class_indices</span><span class="p">.</span><span class="n">items</span><span class="p">()}</span>      
+<span class="n">class_dic</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre>Found 1384 images belonging to 3 classes.
+{0: 'boar', 1: 'female', 2: 'male'}
+</pre></table></code></div></div><hr /><p>test set의 정답 성별을 <code class="language-plaintext highlighter-rouge">true_class</code> 에 저장합니다. 이후 모델의 <code class="language-plaintext highlighter-rouge">predict</code> 메서드를 활용하여 예측 성별을 계산해 <code class="language-plaintext highlighter-rouge">pred_class</code> 에 저장합니다.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="n">true_class</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">class_dic</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">test</span><span class="p">.</span><span class="n">geninfo</span><span class="p">.</span><span class="n">classes</span><span class="p">])</span>
+
+<span class="n">pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test</span><span class="p">.</span><span class="n">gen</span><span class="p">,</span> <span class="n">steps</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">test</span><span class="p">.</span><span class="n">geninfo</span><span class="p">),</span> <span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">pred_class</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">class_dic</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)])</span>
+
+<span class="n">true_class</span><span class="p">,</span><span class="n">pred_class</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>87/87 [==============================] - 12s 137ms/step 
+(array(['boar', 'boar', 'boar', ..., 'male', 'male', 'male'], dtype='&lt;U6'),
+ array(['boar', 'boar', 'boar', ..., 'boar', 'boar', 'boar'], dtype='&lt;U6'))
+</pre></table></code></div></div><hr /><p><code class="language-plaintext highlighter-rouge">sklaen.metrics</code> 에서 제공하는 메서드를 활용해 모델의 성능을 평가해 보았습니다. 정확도는 약 96.1%, F1 score 는 95.1%로 제법 좋은 수준의 모델을 만드는 데 성공 했습니다.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">sklearn.metrics</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'accuracy:'</span><span class="p">,</span><span class="n">sklearn</span><span class="p">.</span><span class="n">metrics</span><span class="p">.</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">pred_class</span><span class="p">,</span><span class="n">true_class</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'F1 score:'</span><span class="p">,</span><span class="n">sklearn</span><span class="p">.</span><span class="n">metrics</span><span class="p">.</span><span class="n">f1_score</span><span class="p">(</span><span class="n">pred_class</span><span class="p">,</span><span class="n">true_class</span><span class="p">,</span><span class="n">average</span> <span class="o">=</span> <span class="s">'macro'</span><span class="p">))</span>
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre>accuracy: 0.9609826589595376
+F1 score: 0.950727719040373
+</pre></table></code></div></div><hr /><p>다음으로 임의의 사진을 불러와 예측하고 CAM을 생성해 보겠습니다. <code class="language-plaintext highlighter-rouge">female</code> 성별 중 임의의 사진 1장을 불러와 <code class="language-plaintext highlighter-rouge">image_crop</code> 함수를 사용해 이미지를 잘라 주었습니다. 이 함수 역시 깃허브 코드에서 확인할 수 있습니다. 잘린 이미지를 확인합니다.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="n">sex</span> <span class="o">=</span> <span class="s">'female'</span>
+
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="n">random_img</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">sample</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">'data</span><span class="se">\\</span><span class="s">test</span><span class="se">\\</span><span class="s">'</span><span class="o">+</span><span class="n">sex</span><span class="p">),</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">img_path</span> <span class="o">=</span> <span class="s">'data</span><span class="se">\\</span><span class="s">test</span><span class="se">\\</span><span class="s">'</span> <span class="o">+</span> <span class="n">sex</span> <span class="o">+</span> <span class="s">'</span><span class="se">\\</span><span class="s">'</span> <span class="o">+</span> <span class="n">random_img</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">image_crop</span><span class="p">(</span><span class="n">img_path</span><span class="p">,</span> <span class="n">crop_point</span><span class="p">,</span> <span class="n">target_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span><span class="mi">224</span><span class="p">))</span>
+<span class="n">img</span>
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://user-images.githubusercontent.com/71325306/109754570-9c226280-7c27-11eb-93cc-b672c799c1cc.png" alt="output_8_0" /></p><hr /><p>이미지를 <code class="language-plaintext highlighter-rouge">np.array</code> 로 변형시켜 준 뒤 <code class="language-plaintext highlighter-rouge">model.predict</code> 메서드를 통해 결과를 예측합니다. <code class="language-plaintext highlighter-rouge">pred</code> 는 이미지의 예측 확률 벡터를 가지고 있을 것 입니다. 가장 높은 확률값의 위치를 <code class="language-plaintext highlighter-rouge">idx</code> 에 할당합니다.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="c1">#estimate pig sex
+</span><span class="n">img_arr</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">.</span><span class="n">resize</span><span class="p">((</span><span class="mi">224</span><span class="p">,</span><span class="mi">224</span><span class="p">)))</span><span class="o">/</span><span class="mf">255.</span>
+<span class="n">pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">img_arr</span><span class="p">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,)</span><span class="o">+</span><span class="n">input_shape</span><span class="p">))</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+</pre></table></code></div></div><hr /><p>CAM 의 생성을 위해 model 의 마지막 feature_channel 을 생성하는 층을 분할 해 새로운 모델 <code class="language-plaintext highlighter-rouge">CAM_model</code> 을 만듭니다. 이후 만들어진 모델에 <code class="language-plaintext highlighter-rouge">img_arr</code> 를 인풋 해 <code class="language-plaintext highlighter-rouge">feature_channel</code> 을 만들어 줍니다. 만들어진 채널별로 weights를 곱해주기 위해 모델 마지막 층의 weights를 <code class="language-plaintext highlighter-rouge">weights</code> 에 선언해 줍니다. 최종적으로 각 feature_channel 과 weights 의 곱을 더해주어 <code class="language-plaintext highlighter-rouge">CAM</code> 을 만들어 냅니다.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre><span class="c1">#separate model for generating CAM
+</span><span class="n">CAM_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">].</span><span class="n">output</span><span class="p">)</span>
+
+<span class="c1">#generate CAM
+</span><span class="n">feature_channel</span> <span class="o">=</span> <span class="n">CAM_model</span><span class="p">(</span><span class="n">img_arr</span><span class="p">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,)</span><span class="o">+</span><span class="n">input_shape</span><span class="p">))</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">weights</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">numpy</span><span class="p">()</span>
+
+<span class="n">CAM</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">feature_channel</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]))</span>
+<span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">weights</span><span class="p">[</span><span class="n">idx</span><span class="p">])):</span>
+    <span class="c1">#sum weights * feature channel    
+</span>    <span class="n">CAM</span> <span class="o">+=</span> <span class="n">feature_channel</span><span class="p">[</span><span class="mi">0</span><span class="p">][:,:,</span><span class="n">w</span><span class="p">]</span> <span class="o">*</span> <span class="n">weights</span><span class="p">[:,</span><span class="n">idx</span><span class="p">][</span><span class="n">w</span><span class="p">]</span>
+</pre></table></code></div></div><hr /><p>만들어진 <code class="language-plaintext highlighter-rouge">CAM</code> 을 최솟값은 0 최댓값은 1 이 되도록 정규화 시켜 줍니다.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="c1">#Normalization CAM
+</span><span class="n">CAM</span> <span class="o">=</span> <span class="n">CAM</span> <span class="o">-</span> <span class="n">np</span><span class="p">.</span><span class="nb">min</span><span class="p">(</span><span class="n">CAM</span><span class="p">)</span>
+<span class="n">CAM</span> <span class="o">=</span> <span class="n">CAM</span><span class="o">/</span><span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">CAM</span><span class="p">)</span>
+<span class="n">CAM</span> <span class="o">=</span> <span class="n">Image</span><span class="p">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">uint8</span><span class="p">(</span><span class="mi">255</span> <span class="o">*</span> <span class="n">CAM</span><span class="p">)).</span><span class="n">resize</span><span class="p">((</span><span class="mi">224</span><span class="p">,</span><span class="mi">224</span><span class="p">))</span>
+</pre></table></code></div></div><hr /><p><code class="language-plaintext highlighter-rouge">matplotlib.pyplot</code> 을 import 해주어 img 와 CAM 을 그린 후 결과를 확인합니다. ResNet50 가 실제로 돼지의 성별에 주요한 도체의 후면부에 집중에서 성별을 결정짓는 사실을 확인할 수 있습니다. 성별 예측 역시 100% 확률 값으로 female로 잘 예측 해 내는 것을 확인할 수 있습니다.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">CAM</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s">'jet'</span><span class="p">,</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">(</span><span class="s">'off'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">img_path</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'-'</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'True:'</span><span class="p">,</span><span class="n">sex</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Pred:'</span><span class="p">,</span><span class="n">class_dic</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span><span class="s">'({0}%)'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span>
+</pre></table></code></div></div><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="https://user-images.githubusercontent.com/71325306/109755335-2b7c4580-7c29-11eb-883f-3d2bc29e1fb8.png" alt="output_12_0" /></p><div class="language-plaintext highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>data\test\female\B-2020.07.30-09-34-20-0000421 C1.tif
+------------------------------------------------------------
+True: female
+Pred: female (100.0%)
+</pre></table></code></div></div><h2 id="reference">Reference</h2><p>He, K., Zhang, X., Ren, S., &amp; Sun, J. (2016). Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 770-778).</p><p>Zhou, B., Khosla, A., Lapedriza, A., Oliva, A., &amp; Torralba, A. (2016). Learning deep features for discriminative localization. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 2921-2929).</p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/computer-vision/'>Computer-Vision</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/computer-vision/" class="post-tag no-text-decoration" >Computer-Vision</a> <a href="/tags/animal-science/" class="post-tag no-text-decoration" >Animal-Science</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=ResNet50 을 활용한 돼지 도체의 성별 예측 - Hyo-Jun Lee&url=https://gywns6287.github.io/posts/PIGSE/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=ResNet50 을 활용한 돼지 도체의 성별 예측 - Hyo-Jun Lee&u=https://gywns6287.github.io/posts/PIGSE/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recent Update</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/PIGSE/">ResNet50 을 활용한 돼지 도체의 성별 예측</a><li><a href="/posts/GBLUP/">Numpy로 구현하는 GBLUP - Imprementing GBLUP with numpy</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/animal-science/">Animal-Science</a> <a class="post-tag" href="/tags/computer-vision/">Computer-Vision</a> <a class="post-tag" href="/tags/genomic-prediction/">Genomic-Prediction</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/GBLUP/"><div class="card-body"> <span class="timeago small" > Feb 1 <i class="unloaded">2021-02-01T14:10:00+09:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Numpy로 구현하는 GBLUP - Imprementing GBLUP with numpy</h3><div class="text-muted small"><p> 사용된 데이터와 코드는 아래의 url 에서 확인 하실 수 있습니다. The data and codes used in the poster can be found at https://github.com/gywns6287/Implementing-GBLUP-with-numpy 이번 프로젝트에서는 Biointormatics에서 사용하는 genomic pr...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/GBLUP/" class="btn btn-outline-primary" prompt="Older"><p>Numpy로 구현하는 GBLUP - Imprementing GBLUP with numpy</p></a> <span class="btn btn-outline-primary disabled"><p>-</p></span></div><div id="disqus" class="pt-2 pb-2"><p class="text-center text-muted pb-5"> Loading comments from <a href="https://disqus.com/">Disqus</a> ...</p></div><script src="/assets/js/lib/jquery.disqusloader.min.js"></script> <script> const options = { scriptUrl: '//gywns6287.disqus.com/embed.js', disqusConfig: function() { this.page.title = 'ResNet50 을 활용한 돼지 도체의 성별 예측'; this.page.url = 'https://gywns6287.github.io/posts/PIGSE/'; this.page.identifier = '/posts/PIGSE/'; } }; $.disqusLoader('#disqus', options); </script></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('.post-content img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2021 <a href="https://twitter.com/username">Hyo-Jun Lee</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/tags/animal-science/">Animal Science</a> <a class="post-tag" href="/tags/computer-vision/">Computer Vision</a> <a class="post-tag" href="/tags/genomic-prediction/">Genomic Prediction</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://gywns6287.github.io{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>' }); </script> <script defer src="https://www.googletagmanager.com/gtag/js?id=G-SLE093F45F"></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-SLE093F45F'); }); </script>
